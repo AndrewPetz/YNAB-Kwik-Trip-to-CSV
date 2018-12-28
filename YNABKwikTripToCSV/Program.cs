@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace YNABKwikTripToCSV
 {
@@ -11,7 +9,50 @@ namespace YNABKwikTripToCSV
     {
         static void Main(string[] args)
         {
+            // check for transactions.csv file in same directory
+            if(TransactionsFileExists(out string filepath))
+            {
+                // if there's a file, ask if they'd like to use it
+                Console.WriteLine("Found a transactions file: " + filepath);
+                Console.WriteLine("Would you like to use that file? (Y/N)");
+                string response = Console.ReadLine();
+                if(string.Equals(response, "Y", StringComparison.OrdinalIgnoreCase))
+                {
+
+                } else if(string.Equals(response, "N", StringComparison.OrdinalIgnoreCase))
+                {
+
+                } else
+                {
+
+                }
+            }
+            else
+            {
+                // if there isn't a file, ask for a filepath
+            }
+            
+            // double-check if the csv is valid
+            // if it is, do the logic to rearrange it and save it to the same place
         }
+
+        private static bool TransactionsFileExists(out string filepath)
+        {
+            bool rVal = false;
+            string currentDir = Directory.GetCurrentDirectory();
+            string[] filesInDirectory = Directory.GetFiles(currentDir);
+            filepath = currentDir + "\\transactions.csv";
+
+            rVal = filesInDirectory.ToList().Contains(filepath, StringComparer.OrdinalIgnoreCase);
+
+            return rVal;
+        }
+
+        // transaction date => date
+        // payee => Kwik Trip
+        // memo => blank (feature idea: dollar amount threshold for setting memo to gas)
+        // transaction total => outflow
+        //  if the total is a negative number, put it in the inflow column
 
         public void RemoveColumnByIndex(string path, int index)
         {
